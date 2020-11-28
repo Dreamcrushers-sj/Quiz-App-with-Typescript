@@ -3,8 +3,19 @@ import './App.css';
 import { getQuizDetails } from './services/quiz_service';
 import { QuizType } from './Types/quiz_types';
 import QuestionCard from './Components/QuestionCard';
+import swDev from './swDev';
+import firebase from './firebase';
 
-function App() {
+ function App() {
+   const messaging  = firebase.messaging();
+   messaging.requestPermission().then(()=> {
+     console.log("Have Permission");
+     return messaging.getToken();
+   }).then((token ) => {
+     alert(token);
+     prompt('tokem', token)
+     console.log('token', token);
+   })
 
   let [quiz, setQuiz] = useState<QuizType[]>([])
   let [currentStep, setCurrentStep] = useState(0)
@@ -59,6 +70,6 @@ if(showResult){
  />     
     </div>
   );
-}
-
+  }
+swDev();
 export default App;
